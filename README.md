@@ -30,13 +30,16 @@ Laravel v10.48.8 (PHP v8.2.18), MySQL 8.
  public - после добавления шаблона сайта <br>
 !!! Иначе без прав доступа не подхватываются части кода в контейнере.
 
-    Создание и запуск контейнера
-docker-compose up --build -d
+Создание --build и запуск up контейнера в фоне -d 
 
-    Останов
-docker-compose down
+    docker-compose up --build -d
 
-    Запуск созданного
-docker-compose up -d
+Останов
+
+    docker-compose down
+
+Запуск созданного
+
+    docker-compose up -d
 
 
