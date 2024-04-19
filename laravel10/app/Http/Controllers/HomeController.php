@@ -19,5 +19,6 @@ class HomeController extends Controller
         // dd($products);
 
         return view('home.index');
+        // return view('welcome');
     }
 }
