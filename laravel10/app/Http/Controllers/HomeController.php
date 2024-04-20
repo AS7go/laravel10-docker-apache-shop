@@ -9,16 +9,19 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $products = Product::orderBy('created_at')->take(8)->get();
 
-        $products=Product::all();
+        return view('home.index', [
+            'products'=>$products
+        ]);
+     
+        // $products=Product::all();
         // foreach($products as $product){
         //     echo '<br>Title: ' . $product->title. ' - Price: ' . $product->price;
         //     echo '<br>---------';
         // }
-        $products = Product::where('id', 3)->first();
         // dd($products);
 
-        return view('home.index');
         // return view('welcome');
     }
 }

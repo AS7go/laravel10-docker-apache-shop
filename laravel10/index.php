@@ -1,7 +1,7 @@
 <?php
 echo '111111111111111';
 
-$host = 'mysql-db';
+$host = 'mysqldb';
 $db = 'ale1';
 // $db = 'ale2';
 $user = 'root';
