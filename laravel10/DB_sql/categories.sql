@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysqldb
--- Время создания: Апр 21 2024 г., 01:05
+-- Время создания: Апр 21 2024 г., 23:40
 -- Версия сервера: 8.0.36
 -- Версия PHP: 8.2.8
 
@@ -24,57 +24,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `product_images`
+-- Структура таблицы `categories`
 --
 
-CREATE TABLE `product_images` (
+CREATE TABLE `categories` (
   `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `img` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_id` bigint UNSIGNED NOT NULL,
+  `alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Дамп данных таблицы `product_images`
+-- Дамп данных таблицы `categories`
 --
 
-INSERT INTO `product_images` (`id`, `img`, `product_id`, `created_at`, `updated_at`) VALUES
-(1, 'details_1.jpg', 1, NULL, NULL),
-(2, 'details_2.jpg', 1, NULL, NULL),
-(3, 'details_3.jpg', 1, NULL, NULL),
-(4, 'details_4.jpg', 1, NULL, NULL);
+INSERT INTO `categories` (`id`, `title`, `desc`, `img`, `alias`, `created_at`, `updated_at`) VALUES
+(1, 'Phones', 'lorem phone', 'categories.jpg', 'phones', NULL, NULL),
+(2, 'Cameras', 'lorem Cameras', 'avds_large.jpg', 'cameras', NULL, NULL),
+(3, 'Laptops', 'lorem laptops', 'categories.jpg', 'laptops', NULL, NULL);
 
 --
 -- Индексы сохранённых таблиц
 --
 
 --
--- Индексы таблицы `product_images`
+-- Индексы таблицы `categories`
 --
-ALTER TABLE `product_images`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_images_product_id_foreign` (`product_id`);
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT для таблицы `product_images`
+-- AUTO_INCREMENT для таблицы `categories`
 --
-ALTER TABLE `product_images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `product_images`
---
-ALTER TABLE `product_images`
-  ADD CONSTRAINT `product_images_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `categories`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

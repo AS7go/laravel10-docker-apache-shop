@@ -11,6 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //В коде, который вы предоставили, создается таблица product_images 
+        //с ограничением внешнего ключа на столбец product_id, который ссылается
+        // на столбец id таблицы products.
+
+        //Это означает, что таблица product_images зависит от таблицы products. 
+        //Конкретно, каждая запись в таблице product_images связана с одной записью 
+        //в таблице products. Столбец product_id в таблице product_images хранит 
+        //значение id соответствующей записи в таблице products.
+        
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->string('img');
