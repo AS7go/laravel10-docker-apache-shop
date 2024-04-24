@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    // по id - resources/views/home/index.blade.php строка 162 ['category', $product->id]
     public function show($cat, $product_id){
         $item = Product::where('id',$product_id)->first();
 
@@ -15,7 +17,46 @@ class ProductController extends Controller
         ]);
     }
 
-    public function showCategory(){
+    // // по alias - resources/views/home/index.blade.php строка 163 ['category', $product->alias]
+    // public function show($cat, $product_alias){
+    //     $item = Product::where('alias', $product_alias)->first();
+    //     // dd($item);
+    //     return view('product.show', [
+    //         'item' => $item
+    //     ]);
+    // }
 
+    public function showCategory(Request $request, $cat_alias)
+    {
+        $cat = Category::where('alias', $cat_alias)->first();
+        
+        $products = Product::where('category_id',$cat->id)->get();
+
+        if(isset($request->orderBy)){
+            if($request->orderBy == 'price-low-hight'){
+                $products = Product::where('category_id',$cat->id)->orderBy('price')->get();
+            }
+            if($request->orderBy == 'price-hight-low'){
+                $products = Product::where('category_id',$cat->id)->orderBy('price','desc')->get();
+            }
+            if($request->orderBy == 'name-a-z'){
+                $products = Product::where('category_id',$cat->id)->orderBy('title')->get();
+            }
+            if($request->orderBy == 'name-z-a'){
+                $products = Product::where('category_id',$cat->id)->orderBy('title','desc')->get();
+            }
+
+        }
+        // выводит кусок кода html
+        if($request->ajax()){
+            return view('ajax.order-by',[
+                'products'=>$products
+            ])->render();
+        }
+        
+        return view('categories.index', [
+            'cat' => $cat,
+            'products'=>$products,
+        ]);
     }
 }
