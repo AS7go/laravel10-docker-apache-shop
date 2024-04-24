@@ -47,36 +47,24 @@
 									<span class="sorting_text">Sort by</span>
 									<i class="fa fa-chevron-down" aria-hidden="true"></i>
 									<ul>
-										<!-- <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Price</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "stars" }'><span>Name</span></li> -->
-
-										<!-- <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Price: Low-Hight</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Price: Hight-Low</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "stars" }'><span>Name: A-Z</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "stars" }'><span>Name: Z-A</span></li> -->
-
 										<li class="product_sorting_btn" data-order="default"><span>Default</span></li>
 										<li class="product_sorting_btn" data-order="price-low-hight"><span>Price: Low-Hight</span></li>
 										<li class="product_sorting_btn" data-order="price-hight-low"><span>Price: Hight-Low</span></li>
 										<li class="product_sorting_btn" data-order="name-a-z"><span>Name: A-Z</span></li>
 										<li class="product_sorting_btn" data-order="name-z-a"><span>Name: Z-A</span></li>
-
-
 									</ul>
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
 
 				<div class="product_grid">
-					{{-- @foreach ($cat->products as $product) --}}
 					@foreach ($products as $product)
 					<!-- Product -->
 					@php
@@ -94,15 +82,17 @@
 							<div class="product_title"><a href="{{route('showProduct', ['category', $product->id])}}">{{$product->title}}</a>
 							</div>
 							@if ($product->new_price != null)
-							<div style="text-decoration: line-through">${{$product->price}}</div>
-							<div class="product_price">${{$product->new_price}}</div>
+								<div style="text-decoration: line-through">${{$product->price}}</div>
+								<div class="product_price">${{$product->new_price}}</div>
 							@else
-							<div class="product_price">${{$product->price}}</div>
+								<div class="product_price">${{$product->price}}</div>
 							@endif
 						</div>
 					</div>
 					@endforeach
 				</div>
+				{{$products->appends(request()->query())->links('pagination.index')}}
+				{{-- $products->appends(request()->query())->links() --}}
 			</div>
 		</div>
 	</div>
@@ -180,7 +170,6 @@
 	@endsection
 
 	@section('custom_js')
-	<!-- <script src="js/categories.js"></script> -->
 	<script>
 		$(document).ready(function() {
 			$('.product_sorting_btn').click(function() {
@@ -191,7 +180,8 @@
 					url: "{{route('showCategory', $cat->alias)}}",
 					type: "GET",
 					data: {
-						orderBy: orderBy
+						orderBy: orderBy,
+						page: {{isset($_GET['page']) ? $_GET['page'] : 1}},
 					},
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -200,8 +190,13 @@
 						let positionParameters = location.pathname.indexOf('?');
 						let url = location.pathname.substring(positionParameters, location.pathname.length);
 						let newURL = url + '?';
-						newURL += 'orderBy=' + orderBy;
+						newURL += 'orderBy=' + orderBy + "&page={{isset($_GET['page']) ? $_GET['page'] : 1}}";
 						history.pushState({}, '', newURL);
+
+						$('.product_pagination a').each(function(index, value){
+                            let link= $(this).attr('href')
+                            $(this).attr('href',link+'&orderBy='+orderBy)
+                        })
 
 						$('.product_grid').html(data)
 						// console.log(data)
