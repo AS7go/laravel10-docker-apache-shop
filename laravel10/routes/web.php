@@ -7,35 +7,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cart', [CartController::class, 'index'])->name('cartIndex');
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
+
 Route::get('/{cat}', [ProductController::class, 'showCategory'])->name('showCategory');
 Route::get('/{cat}/{product_id}', [ProductController::class, 'show'])->name('showProduct');
 
 // Route::get('/{cat}/{product_alias}', [ProductController::class, 'show'])->name('showProduct');
 
-
-// Route::get('/', [HomeController::class, 'index']);
-// Route::get('/{cat_alias}', [ProductController::class, 'showCategory'])->name('showCategory');
-// Route::get('/{cat_alias}/{product_alias}', [ProductController::class, 'show'])->name('showProduct');
-
-
-// Route::get('/category/{product_alias}', [ProductController::class, 'show'])->name('showProduct');
-
-// Route::get('/{cat}/{product_alias}', [ProductController::class, 'show'])->name('showProduct');
-
-
-// Route::get('/{cat}/{product_title}', [ProductController::class])->name('showTitle');
-
-// Route::get('/{cat}/{product_id}', [HomeController::class, 'index']);
-
-
 // Route::get('/', function () {
 //     return view('welcome');
-// });
-
-// Route::get('/', function () {
-//     return view('index');
-// });
-
-// Route::get('/', function () {
-//     return view('home.index');
 // });
