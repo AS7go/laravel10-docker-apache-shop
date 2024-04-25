@@ -3,8 +3,8 @@
 @section('title', $cat->title)
 
 @section('custom_css')
-<link rel="stylesheet" type="text/css" href="styles/categories.css">
-<link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
+<link rel="stylesheet" type="text/css" href="/styles/categories.css">
+<link rel="stylesheet" type="text/css" href="/styles/categories_responsive.css">
 @endsection
 
 @section('content')
